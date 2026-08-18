@@ -42,6 +42,7 @@ class MyFlightStatusSensor(MyFlightEntity, SensorEntity):
         self._attr_translation_key = "status"
         self._attr_unique_id = f"{entry_id}_status"
         self._attr_icon = "mdi:airplane"
+        self.entity_id = "sensor.myflight_status"
 
     @property
     def native_value(self) -> StateType:
