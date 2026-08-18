@@ -26,6 +26,7 @@ _STATUS_ATTR_KEYS = (
     "flight_track",
     "live_fleet",
     "airport_stats",
+    "roster_month",
     "next_duty_date",
     "airborne_count",
     "partner_status",
@@ -42,7 +43,6 @@ class MyFlightStatusSensor(MyFlightEntity, SensorEntity):
         self._attr_translation_key = "status"
         self._attr_unique_id = f"{entry_id}_status"
         self._attr_icon = "mdi:airplane"
-        self.entity_id = "sensor.myflight_status"
 
     @property
     def native_value(self) -> StateType:

@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "myFlight",
-        "description": "Enter the server URL, API key, and username for your myFlight instance.",
+        "description": "Enter the server URL, API key, and username. Add the integration again for another account.",
         "data": {
           "url": "Server URL",
           "api_key": "API key",
@@ -23,6 +23,19 @@
     },
     "abort": {
       "already_configured": "This server and username are already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "myFlight options",
+        "description": "Add the integration again for another username. Each account gets its own cards.",
+        "data": {
+          "scan_interval": "Poll interval (seconds)",
+          "airport": "Optional location code",
+          "track_registration": "Optional tracker ID"
+        }
+      }
     }
   },
   "entity": {

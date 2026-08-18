@@ -1,3 +1,45 @@
 refresh:
   name: Refresh status
   description: Poll /api/ha/status immediately.
+  fields:
+    entity_id:
+      name: Status sensor
+      description: Optional. Which myFlight account to refresh.
+      selector:
+        entity:
+          integration: myflight
+          domain: sensor
+
+set_track:
+  name: Set tracker
+  description: Follow a tail number on the live track card.
+  fields:
+    entity_id:
+      name: Status sensor
+      selector:
+        entity:
+          integration: myflight
+          domain: sensor
+    registration:
+      name: Tail
+      example: HA-LZT
+      required: true
+      selector:
+        text:
+
+set_airport:
+  name: Set airport
+  description: Airport used for departure stats and the board.
+  fields:
+    entity_id:
+      name: Status sensor
+      selector:
+        entity:
+          integration: myflight
+          domain: sensor
+    airport:
+      name: Airport
+      example: BUD
+      required: true
+      selector:
+        text:

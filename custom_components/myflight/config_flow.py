@@ -125,3 +125,49 @@ class MyFlightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=STEP_USER_SCHEMA,
             errors=errors,
         )
+
+    @staticmethod
+    def async_get_options_flow(config_entry: config_entries.ConfigEntry):
+        return MyFlightOptionsFlow()
+
+
+class MyFlightOptionsFlow(config_entries.OptionsFlow):
+    """Airport, tracker ID, and poll interval after setup."""
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> config_entries.ConfigFlowResult:
+        current = {**self.config_entry.data, **self.config_entry.options}
+        if user_input is not None:
+            airport = (user_input.get(CONF_AIRPORT) or "").strip().upper()
+            track = (user_input.get(CONF_TRACK_REGISTRATION) or "").strip().upper()
+            return self.async_create_entry(
+                title="",
+                data={
+                    CONF_AIRPORT: airport,
+                    CONF_TRACK_REGISTRATION: track,
+                    CONF_SCAN_INTERVAL: user_input.get(
+                        CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                    ),
+                },
+            )
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
+                        CONF_SCAN_INTERVAL,
+                        default=current.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+                    ): vol.All(
+                        vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)
+                    ),
+                    vol.Optional(
+                        CONF_AIRPORT, default=current.get(CONF_AIRPORT, "")
+                    ): str,
+                    vol.Optional(
+                        CONF_TRACK_REGISTRATION,
+                        default=current.get(CONF_TRACK_REGISTRATION, ""),
+                    ): str,
+                }
+            ),
+        )

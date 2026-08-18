@@ -15,3 +15,5 @@ API_STATUS_PATH = "/api/ha/status"
 API_PUSH_PATH = "/api/ha/push"
 
 SERVICE_REFRESH = "refresh"
+SERVICE_SET_TRACK = "set_track"
+SERVICE_SET_AIRPORT = "set_airport"
