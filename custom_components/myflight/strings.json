@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "myFlight",
+        "description": "Enter your myFlight server URL, HA_API_KEY, and the myFlight username whose home cards you want on this dashboard.",
+        "data": {
+          "url": "Server URL",
+          "api_key": "API key",
+          "username": "myFlight username",
+          "scan_interval": "Poll interval (seconds)",
+          "airport": "Airport IATA (optional, for departure stats)",
+          "track_registration": "Track registration (optional)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the server. Check the URL and network.",
+      "invalid_api_key": "Invalid API key.",
+      "invalid_url": "Enter a full URL including https://",
+      "invalid_username": "Enter a myFlight username.",
+      "unknown_user": "That username was not found on the server."
+    },
+    "abort": {
+      "already_configured": "This server and username are already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": { "name": "Status" },
+      "next_duty_date": { "name": "Next duty date" },
+      "roster_changes_count": { "name": "Pending roster changes" },
+      "airborne_count": { "name": "Airborne aircraft" },
+      "partner_status": { "name": "Partner flight status" }
+    },
+    "binary_sensor": {
+      "has_roster_changes": { "name": "Roster changes" },
+      "has_partner_flight": { "name": "Partner live flight" }
+    },
+    "button": {
+      "refresh": { "name": "Refresh status" },
+      "push_webhook": { "name": "Push to webhook" }
+    },
+    "device_tracker": {
+      "mission_aircraft": { "name": "Mission aircraft" },
+      "partner_aircraft": { "name": "Partner aircraft" },
+      "tracked_aircraft": { "name": "Tracked aircraft" }
+    }
+  }
+}
