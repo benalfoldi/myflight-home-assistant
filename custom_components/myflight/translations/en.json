@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "myFlight",
-        "description": "Enter your myFlight server URL, HA_API_KEY, and the myFlight username whose home cards you want on this dashboard.",
+        "description": "Enter the server URL, API key, and username for your myFlight instance.",
         "data": {
           "url": "Server URL",
           "api_key": "API key",
@@ -29,12 +29,12 @@
     "sensor": {
       "status": { "name": "Status" },
       "next_duty_date": { "name": "Next duty date" },
-      "roster_changes_count": { "name": "Pending roster changes" },
+      "roster_changes_count": { "name": "Pending updates" },
       "airborne_count": { "name": "Airborne aircraft" },
-      "partner_status": { "name": "Partner flight status" }
+      "partner_status": { "name": "Partner status" }
     },
     "binary_sensor": {
-      "has_roster_changes": { "name": "Roster changes" },
+      "has_roster_changes": { "name": "Pending updates" },
       "has_partner_flight": { "name": "Partner live flight" }
     },
     "button": {
