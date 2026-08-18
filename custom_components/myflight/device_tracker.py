@@ -1,4 +1,4 @@
-"""GPS device trackers for live myFlight aircraft."""
+"""GPS device trackers for live myFlight positions."""
 
 from __future__ import annotations
 

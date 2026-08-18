@@ -9,8 +9,8 @@
           "api_key": "API key",
           "username": "myFlight username",
           "scan_interval": "Poll interval (seconds)",
-          "airport": "Airport IATA (optional, for departure stats)",
-          "track_registration": "Track registration (optional)"
+          "airport": "Optional location code",
+          "track_registration": "Optional tracker ID"
         }
       }
     },
@@ -28,23 +28,23 @@
   "entity": {
     "sensor": {
       "status": { "name": "Status" },
-      "next_duty_date": { "name": "Next duty date" },
+      "next_duty_date": { "name": "Next item" },
       "roster_changes_count": { "name": "Pending updates" },
-      "airborne_count": { "name": "Airborne aircraft" },
+      "airborne_count": { "name": "Active count" },
       "partner_status": { "name": "Partner status" }
     },
     "binary_sensor": {
       "has_roster_changes": { "name": "Pending updates" },
-      "has_partner_flight": { "name": "Partner live flight" }
+      "has_partner_flight": { "name": "Partner live" }
     },
     "button": {
       "refresh": { "name": "Refresh status" },
       "push_webhook": { "name": "Push to webhook" }
     },
     "device_tracker": {
-      "mission_aircraft": { "name": "Mission aircraft" },
-      "partner_aircraft": { "name": "Partner aircraft" },
-      "tracked_aircraft": { "name": "Tracked aircraft" }
+      "mission_aircraft": { "name": "Mission tracker" },
+      "partner_aircraft": { "name": "Partner tracker" },
+      "tracked_aircraft": { "name": "Tracked item" }
     }
   }
 }

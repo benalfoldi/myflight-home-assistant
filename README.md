@@ -1,6 +1,6 @@
 # myFlight
 
-HACS custom integration for a self-hosted myFlight server. Polls `GET /api/ha/status` and creates sensors, buttons, and device trackers.
+HACS custom integration for a self-hosted myFlight server.
 
 Companion Lovelace plugin: [myflight-card](https://github.com/benalfoldi/myflight-card).
 
@@ -14,11 +14,11 @@ Companion Lovelace plugin: [myflight-card](https://github.com/benalfoldi/myfligh
 | Field | Description |
 |-------|-------------|
 | Server URL | Base URL of your myFlight instance |
-| API key | `HA_API_KEY` from the server environment |
+| API key | From the server environment |
 | Username | Account on that server |
 | Poll interval | Seconds (default 60, minimum 60) |
-| Airport | Optional IATA code |
-| Track registration | Optional aircraft registration |
+
+Leave any extra fields blank if you do not need them.
 
 ```yaml
 type: custom:myflight-next-duty-card
