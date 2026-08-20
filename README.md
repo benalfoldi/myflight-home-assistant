@@ -14,8 +14,8 @@ Companion Lovelace plugin: [myflight-card](https://github.com/benalfoldi/myfligh
 | Field | Description |
 |-------|-------------|
 | Server URL | Base URL of your myFlight instance |
-| API key | From the server environment |
-| Username | Account on that server |
+| API key | Copy from myFlight → Info → HA |
+| Username | myFlight sign-in name (not the display name) |
 | Poll interval | Seconds (default 60, minimum 60) |
 
 Leave any extra fields blank if you do not need them.
