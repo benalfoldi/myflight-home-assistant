@@ -37,4 +37,9 @@ class MyFlightCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         try:
             return await self.api.async_get_status(session)
         except MyFlightApiError as err:
+            if self.data:
+                _LOGGER.warning(
+                    "myFlight update failed, keeping last snapshot: %s", err
+                )
+                return self.data
             raise UpdateFailed(str(err)) from err

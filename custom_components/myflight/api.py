@@ -45,7 +45,10 @@ class MyFlightApi:
         headers = {"X-API-Key": self._api_key}
         try:
             async with session.get(
-                url, headers=headers, params=self._params(), timeout=30
+                url,
+                headers=headers,
+                params=self._params(),
+                timeout=aiohttp.ClientTimeout(total=45),
             ) as response:
                 if response.status == 403:
                     raise MyFlightApiError("Invalid API key")
@@ -57,6 +60,8 @@ class MyFlightApi:
                     body = await response.text()
                     raise MyFlightApiError(f"HTTP {response.status}: {body[:200]}")
                 return await response.json()
+        except TimeoutError as err:
+            raise MyFlightApiError(str(err) or "Request timed out") from err
         except aiohttp.ClientError as err:
             raise MyFlightApiError(str(err)) from err
 
@@ -64,7 +69,10 @@ class MyFlightApi:
         url = f"{self._base_url}{API_PUSH_PATH}"
         headers = {"X-API-Key": self._api_key}
         async with session.post(
-            url, headers=headers, params=self._params(), timeout=30
+            url,
+            headers=headers,
+            params=self._params(),
+            timeout=aiohttp.ClientTimeout(total=45),
         ) as response:
             if response.status >= 400:
                 body = await response.text()
