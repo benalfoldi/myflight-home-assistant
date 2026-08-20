@@ -27,6 +27,7 @@ _STATUS_ATTR_KEYS = (
     "live_fleet",
     "airport_stats",
     "roster_month",
+    "time_display",
     "next_duty_date",
     "airborne_count",
     "partner_status",
