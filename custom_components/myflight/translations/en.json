@@ -3,10 +3,11 @@
     "step": {
       "user": {
         "title": "myFlight",
-        "description": "Enter the server URL, API key, and username. Add the integration again for another account.",
+        "description": "Enter the server URL, API key, username, and that account’s passkey. Add the integration again for another account.",
         "data": {
           "url": "Server URL",
           "api_key": "API key",
+          "passkey": "Passkey",
           "username": "myFlight username",
           "scan_interval": "Poll interval (seconds)",
           "airport": "Optional location code",
@@ -17,6 +18,7 @@
     "error": {
       "cannot_connect": "Could not reach the server. Check the URL and network.",
       "invalid_api_key": "Invalid API key.",
+      "invalid_passkey": "Invalid passkey for that username.",
       "invalid_url": "Enter a full URL including https://",
       "invalid_username": "Enter a myFlight username.",
       "unknown_user": "That username was not found on the server."
@@ -32,6 +34,7 @@
         "description": "Add the integration again for another username. Each account gets its own cards.",
         "data": {
           "scan_interval": "Poll interval (seconds)",
+          "passkey": "Passkey",
           "airport": "Optional location code",
           "track_registration": "Optional tracker ID"
         }

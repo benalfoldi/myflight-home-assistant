@@ -17,6 +17,7 @@ from .api import MyFlightApi
 from .const import (
     CONF_AIRPORT,
     CONF_API_KEY,
+    CONF_PASSKEY,
     CONF_SCAN_INTERVAL,
     CONF_TRACK_REGISTRATION,
     CONF_USERNAME,
@@ -50,6 +51,7 @@ def _build_api(entry: ConfigEntry) -> MyFlightApi:
         conf[CONF_URL],
         conf[CONF_API_KEY],
         conf[CONF_USERNAME],
+        passkey=conf.get(CONF_PASSKEY),
         airport=conf.get(CONF_AIRPORT),
         track_registration=conf.get(CONF_TRACK_REGISTRATION),
     )

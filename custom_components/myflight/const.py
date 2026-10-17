@@ -3,6 +3,7 @@
 DOMAIN = "myflight"
 
 CONF_API_KEY = "api_key"
+CONF_PASSKEY = "passkey"
 CONF_USERNAME = "username"
 CONF_SCAN_INTERVAL = "scan_interval"
 CONF_AIRPORT = "airport"

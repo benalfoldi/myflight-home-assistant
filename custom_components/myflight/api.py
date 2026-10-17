@@ -23,12 +23,14 @@ class MyFlightApi:
         api_key: str,
         username: str,
         *,
+        passkey: str | None = None,
         airport: str | None = None,
         track_registration: str | None = None,
     ) -> None:
         self._base_url = base_url.rstrip("/")
         self._api_key = api_key
         self._username = username
+        self._passkey = (passkey or "").strip()
         self._airport = (airport or "").strip().upper() or None
         self._track_registration = (track_registration or "").strip().upper() or None
 
@@ -43,6 +45,8 @@ class MyFlightApi:
     async def async_get_status(self, session: aiohttp.ClientSession) -> dict[str, Any]:
         url = f"{self._base_url}{API_STATUS_PATH}"
         headers = {"X-API-Key": self._api_key}
+        if self._passkey:
+            headers["X-HA-Passkey"] = self._passkey
         try:
             async with session.get(
                 url,
@@ -51,6 +55,14 @@ class MyFlightApi:
                 timeout=aiohttp.ClientTimeout(total=45),
             ) as response:
                 if response.status == 403:
+                    detail = ""
+                    try:
+                        payload = await response.json()
+                        detail = str(payload.get("detail") or "")
+                    except Exception:
+                        detail = await response.text()
+                    if "passkey" in detail.lower():
+                        raise MyFlightApiError("Invalid passkey")
                     raise MyFlightApiError("Invalid API key")
                 if response.status == 404:
                     raise MyFlightApiError("Unknown user")
@@ -68,6 +80,8 @@ class MyFlightApi:
     async def async_push_webhook(self, session: aiohttp.ClientSession) -> None:
         url = f"{self._base_url}{API_PUSH_PATH}"
         headers = {"X-API-Key": self._api_key}
+        if self._passkey:
+            headers["X-HA-Passkey"] = self._passkey
         async with session.post(
             url,
             headers=headers,

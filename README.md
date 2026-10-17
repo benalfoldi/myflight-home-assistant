@@ -14,7 +14,8 @@ Companion Lovelace plugin: [myflight-card](https://github.com/benalfoldi/myfligh
 | Field | Description |
 |-------|-------------|
 | Server URL | Base URL of your myFlight instance |
-| API key | Copy from myFlight → Info → HA |
+| API key | Shared server key from myFlight → Info → Home Assistant |
+| Passkey | That account’s passkey from the same screen |
 | Username | myFlight sign-in name (not the display name) |
 | Poll interval | Seconds (default 60, minimum 60) |
 

@@ -16,6 +16,7 @@ from .api import MyFlightApi, MyFlightApiError
 from .const import (
     CONF_AIRPORT,
     CONF_API_KEY,
+    CONF_PASSKEY,
     CONF_SCAN_INTERVAL,
     CONF_TRACK_REGISTRATION,
     CONF_USERNAME,
@@ -30,6 +31,7 @@ STEP_USER_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_URL): str,
         vol.Required(CONF_API_KEY): str,
+        vol.Required(CONF_PASSKEY): str,
         vol.Required(CONF_USERNAME): str,
         vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
             vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)
@@ -55,10 +57,14 @@ async def _validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str
         raise ValueError("invalid_username")
     airport = (data.get(CONF_AIRPORT) or "").strip().upper()
     track = (data.get(CONF_TRACK_REGISTRATION) or "").strip().upper()
+    passkey = (data.get(CONF_PASSKEY) or "").strip()
+    if not passkey:
+        raise ValueError("invalid_passkey")
     api = MyFlightApi(
         url,
         data[CONF_API_KEY],
         username,
+        passkey=passkey,
         airport=airport or None,
         track_registration=track or None,
     )
@@ -91,12 +97,16 @@ class MyFlightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors[CONF_URL] = "invalid_url"
                 elif key == "invalid_username":
                     errors[CONF_USERNAME] = "invalid_username"
+                elif key == "invalid_passkey":
+                    errors[CONF_PASSKEY] = "invalid_passkey"
                 else:
                     errors["base"] = "cannot_connect"
             except MyFlightApiError as err:
                 message = str(err)
                 if "Invalid API key" in message:
                     errors[CONF_API_KEY] = "invalid_api_key"
+                elif "Invalid passkey" in message:
+                    errors[CONF_PASSKEY] = "invalid_passkey"
                 elif "Unknown user" in message:
                     errors[CONF_USERNAME] = "unknown_user"
                 else:
@@ -111,6 +121,7 @@ class MyFlightConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data={
                         CONF_URL: normalized[CONF_URL],
                         CONF_API_KEY: user_input[CONF_API_KEY],
+                        CONF_PASSKEY: (user_input.get(CONF_PASSKEY) or "").strip(),
                         CONF_USERNAME: normalized[CONF_USERNAME],
                         CONF_SCAN_INTERVAL: user_input.get(
                             CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
@@ -141,6 +152,9 @@ class MyFlightOptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             airport = (user_input.get(CONF_AIRPORT) or "").strip().upper()
             track = (user_input.get(CONF_TRACK_REGISTRATION) or "").strip().upper()
+            passkey = (user_input.get(CONF_PASSKEY) or "").strip() or current.get(
+                CONF_PASSKEY, ""
+            )
             return self.async_create_entry(
                 title="",
                 data={
@@ -149,6 +163,7 @@ class MyFlightOptionsFlow(config_entries.OptionsFlow):
                     CONF_SCAN_INTERVAL: user_input.get(
                         CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
                     ),
+                    CONF_PASSKEY: passkey,
                 },
             )
         return self.async_show_form(
@@ -161,6 +176,9 @@ class MyFlightOptionsFlow(config_entries.OptionsFlow):
                     ): vol.All(
                         vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)
                     ),
+                    vol.Optional(
+                        CONF_PASSKEY, default=current.get(CONF_PASSKEY, "")
+                    ): str,
                     vol.Optional(
                         CONF_AIRPORT, default=current.get(CONF_AIRPORT, "")
                     ): str,
