@@ -34,6 +34,7 @@ _STATUS_ATTR_KEYS = (
     "has_roster_changes",
     "has_partner_flight",
     "live_loading",
+    "mission_loading",
     "live_pending",
 )
 
